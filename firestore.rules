@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper to check user authentication or owner
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Test connection doc used to validate connection on boot
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    match /users/{userId} {
+      allow read, write: if true;
+
+      match /{subcollection=**} {
+        allow read, write: if true;
+      }
+    }
+
+    match /savingsGoals/{goalId} {
+      allow read, write: if true;
+    }
+
+    match /transactions/{txId} {
+      allow read, write: if true;
+    }
+
+    match /transactionAllocations/{allocId} {
+      allow read, write: if true;
+    }
+
+    match /exchangeRates/{rateId} {
+      allow read, write: if true;
+    }
+  }
+}

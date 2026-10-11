@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Outfit', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .font-mono, .tabular-nums {
+    font-family: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Material Design 3 and Wedzo Fintech elevations */
+  :root {
+    --fintech-green: #10b981;
+    --fintech-green-deep: #064e3b;
+    --fintech-navy: #0a1128;
+    --fintech-surface: #0f172a;
+  }
+
+  .theme-light {
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  .theme-dark {
+    background-color: #050b18;
+    color: #f8fafc;
+  }
+}
+
+

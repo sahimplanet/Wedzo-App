@@ -1,0 +1,99 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "SaveFlow AI user profile with platform configuration, currency, and allocation preferences",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "platform": { "type": "string", "enum": ["mpesa", "bank"] },
+        "mpesaServices": { "type": "array", "items": { "type": "string" } },
+        "banks": { "type": "array", "items": { "type": "string" } },
+        "currency": { "type": "string" },
+        "overallSavingsTarget": { "type": "number" },
+        "autoAllocate": { "type": "boolean" },
+        "allocationMode": { "type": "string", "enum": ["equal", "percentage"] },
+        "onboardingCompleted": { "type": "boolean" },
+        "theme": { "type": "string", "enum": ["dark", "light"] }
+      },
+      "required": ["id", "email", "name"]
+    },
+    "SavingsGoal": {
+      "title": "SavingsGoal",
+      "description": "User defined or templated savings goal with target and progress",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "currency": { "type": "string" },
+        "deadline": { "type": "string" },
+        "description": { "type": "string" },
+        "priority": { "type": "string", "enum": ["high", "medium", "low"] },
+        "currentVerifiedSaved": { "type": "number" },
+        "remainingAmount": { "type": "number" },
+        "progressPercentage": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "completed", "paused"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "targetAmount", "currentVerifiedSaved", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "AI-verified transaction with duplicate protection and multi-layer verification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "rawMessage": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "transactionRef": { "type": "string" },
+        "provider": { "type": "string" },
+        "transactionType": { "type": "string" },
+        "transactionDate": { "type": "string" },
+        "verificationStatus": { "type": "string", "enum": ["verified", "pending", "rejected", "duplicate", "needs_review"] },
+        "verificationExplanation": { "type": "string" },
+        "verifiedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "amount", "currency", "transactionRef", "verificationStatus"]
+    },
+    "TransactionAllocation": {
+      "title": "TransactionAllocation",
+      "description": "Individual goal allocation record resulting from verified transaction distribution",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "transactionId": { "type": "string" },
+        "goalId": { "type": "string" },
+        "goalName": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "allocatedAt": { "type": "string" }
+      },
+      "required": ["id", "transactionId", "goalId", "amount", "currency"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile document"
+    },
+    "/users/{userId}/savingsGoals/{goalId}": {
+      "schema": "SavingsGoal",
+      "description": "User savings goals with verified progress"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "User verified and pending transaction records"
+    },
+    "/users/{userId}/transactionAllocations/{allocationId}": {
+      "schema": "TransactionAllocation",
+      "description": "Goal allocations linked to transactions"
+    }
+  }
+}

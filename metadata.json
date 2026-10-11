@@ -1,0 +1,6 @@
+{
+  "name": "Wedzo - Smart Finance & SMS Reconciliation",
+  "description": "Smart personal finance engine that scans and verifies bank & M-Pesa transaction messages, automates liability deductions, and reconciles savings with AI financial discipline credits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
